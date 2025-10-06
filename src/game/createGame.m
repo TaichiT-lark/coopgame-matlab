@@ -2,6 +2,19 @@ classdef createGame
     %{
         createGame Class - Responsible for creating a new game instance
         ---------------------------------------
+        Syntax: game = createGame(n, v) or game = createGame(n)
+        Input:
+            n - Number of players
+            v - (Optional) Value function as a vector of length 2^n
+                If not provided, initializes to zeros.
+        Output:
+            game - An instance of the createGame class
+        Methods:
+            generateCoalitions - Generates the coalition structure matrix
+            getValue - Retrieves the value of a specific coalition
+            showCoalitions - Displays all coalitions and their values
+            setValues - Sets values for specified coalitions
+            setValuesFromMatrix - Sets values from a coalition binary matrix and corresponding values
 
         ---------------------------------------
     %}
@@ -41,13 +54,20 @@ classdef createGame
         function showCoalitions(obj)
             fprintf('All coalitions for n = %d players:\n', obj.n);
 
-            for i = 1:size(obj.coalitionMat, 1)
-                members = find(obj.coalitionMat(i, :));
+            % calculate sizes of each coalition
+            coalitionSizes = sum(obj.coalitionMat, 2);
+
+            % Sort order: first by coalition size (ascending), then lexicographically
+            [~, sortIdx] = sortrows([coalitionSizes -obj.coalitionMat]);
+
+            % Output in sorted order
+            for idx = sortIdx'
+                members = find(obj.coalitionMat(idx, :));
 
                 if isempty(members)
-                    fprintf('  {} : v = %.2f\n', obj.v(i));
+                    fprintf('  {} : v = %.2f\n', obj.v(idx));
                 else
-                    fprintf('  {%s} : v = %.2f\n', num2str(members, '%d,'), obj.v(i));
+                    fprintf('  {%s} : v = %.2f\n', num2str(members, '%d,'), obj.v(idx));
                 end
 
             end
