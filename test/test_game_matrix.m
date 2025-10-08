@@ -25,6 +25,9 @@ game.showCoalitions();
 %% Calculate the Shapley value
 shap = shapleyValue(game)
 
+%% Calculate the nucleolus
+[nuc, epsilon_seq] = nucleolus(game)
+
 %% Check property
 
 % convexity
