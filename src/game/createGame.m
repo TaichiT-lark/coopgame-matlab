@@ -32,13 +32,28 @@ classdef createGame
                 v = zeros(2 ^ n, 1);
             end
 
+            if length(v) ~= 2 ^ n - 1
+                error('Value function length must be 2^n-1.');
+            end
+
             obj.n = n;
             obj.v = v;
             obj.coalitionMat = obj.generateCoalitions(n);
         end
 
         function C = generateCoalitions(~, n)
-            C = dec2bin(0:(2 ^ n) - 1) - '0';
+            % coalitionMat: (2^n - 1) x n matrix
+            % Ordered by number of players (1,2,...,n) and lexicographically by player index
+
+            C = [];
+            for k = 1:n
+                combos = nchoosek(1:n, k);  % all k-player coalitions
+                temp = zeros(size(combos,1), n);
+                for i = 1:size(combos,1)
+                    temp(i, combos(i,:)) = 1;
+                end
+                C = [C; temp]; %#ok<AGROW>
+            end
         end
 
         function val = getValue(obj, binaryCoalition)

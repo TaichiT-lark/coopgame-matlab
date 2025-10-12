@@ -13,8 +13,8 @@ function [nuc, epsilon_seq] = nucleolus(game)
     N = length(v);
 
     % Remove empty set and grand coalition from constraints
-    coalitions = coalitionMat(2:end - 1, :);
-    values = v(2:end - 1);
+    coalitions = coalitionMat;
+    values = v;
 
     % objective: minimize the maximum excess
     f = [zeros(1, n), 1]; % [x1, x2, ..., xn, epsilon]
