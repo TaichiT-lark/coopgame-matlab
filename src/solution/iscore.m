@@ -29,7 +29,7 @@ function [isCore, violatingCoalitions] = iscore(game, x)
 
     % --- 2. Coalitional rationality ---
     violatingCoalitions = {};
-    for s = 2:(2^n - 1)  % exclude empty set and full coalition
+    for s = 1:length(v)  % exclude empty set and full coalition
         members = find(C(s, :));
         if sum(x(members)) < v(s) - 1e-8
             violatingCoalitions{end+1} = members; %#ok<AGROW>
