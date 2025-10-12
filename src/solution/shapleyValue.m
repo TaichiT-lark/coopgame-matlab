@@ -11,7 +11,7 @@ function [shap, matrix] = shapleyValue(game)
     v = game.v;
     coalitionMat = game.coalitionMat;
 
-    shapMatrix = zeros(n, length(v))
+    shapMatrix = zeros(n, length(v));
 
     for S = 1:length(v)
         members = find(coalitionMat(S, :));
