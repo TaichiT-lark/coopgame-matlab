@@ -29,7 +29,7 @@ classdef createGame
         function obj = createGame(n, v)
 
             if nargin < 2
-                v = zeros(2 ^ n, 1);
+                v = zeros(2 ^ n - 1, 1);
             end
 
             if length(v) ~= 2 ^ n - 1
