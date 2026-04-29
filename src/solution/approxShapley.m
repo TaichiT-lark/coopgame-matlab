@@ -1,18 +1,18 @@
-function phi_hat = approxShapley(game, m)
+function phi_hat = approxShapley(game, sampleSize)
 % APPROXSHAPLEY - Approximate the Shapley value using sampling (Castro et al., 2009)
 %
 % Syntax:
-%   phi_hat = approxShapley(game, m)
+%   phi_hat = approxShapley(game, sampleSize)
 %
 % Inputs:
 %   game - createGame object
-%   m    - number of random permutations (sample size)
+%   sampleSize    - number of random permutations (sample size)
 %
 % Output:
 %   phi_hat - approximate Shapley value (n×1 vector)
 %
 % Description:
-%   The algorithm samples m random player orders (permutations)
+%   The algorithm samples sampleSize random player orders (permutations)
 %   and computes the marginal contribution of each player in each sample.
 %   The result is the unbiased Monte Carlo estimate of the Shapley value.
 %
@@ -27,7 +27,7 @@ function phi_hat = approxShapley(game, m)
     powers = 2 .^ ((n - 1):-1:0);
 
     % --- Sampling loop ---
-    for t = 1:m
+    for t = 1:sampleSize
         order = randperm(n); % random permutation of players
 
         % Predecessor coalition (starts empty)
@@ -50,5 +50,5 @@ function phi_hat = approxShapley(game, m)
     end
 
     % Average over samples
-    phi_hat = phi_hat / m;
+    phi_hat = phi_hat / sampleSize;
 end
